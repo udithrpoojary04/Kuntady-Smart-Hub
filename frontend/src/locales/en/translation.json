@@ -9,5 +9,8 @@
     "welcome_message": "Welcome to your city's best transport guide.",
     "search": "Search",
     "submit": "Submit",
-    "language": "Language"
+    "language": "Language",
+    "tempo": "Tempo",
+    "auto": "Auto",
+    "car_taxis": "Car Taxis"
 }

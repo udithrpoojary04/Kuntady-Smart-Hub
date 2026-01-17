@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Bus, MapPin, Truck, MessageSquare, ShieldCheck, Globe, Menu, X } from 'lucide-react';
+import { Bus, MapPin, Truck, MessageSquare, ShieldCheck, Globe, Menu, X, Car } from 'lucide-react';
+import AutoRickshawIcon from './icons/AutoRickshawIcon';
 
 const Navbar = () => {
     const { t, i18n } = useTranslation();
@@ -57,7 +58,9 @@ const Navbar = () => {
                     {/* Desktop Menu */}
                     <div className="hidden md:flex items-center space-x-6">
                         <NavLink to="/buses" icon={Bus} label={t('bus_timings')} />
-                        <NavLink to="/transport" icon={Truck} label={t('transport_services')} />
+                        <NavLink to="/transport?type=TEMPO" icon={Truck} label={t('tempo')} />
+                        <NavLink to="/transport?type=AUTO" icon={AutoRickshawIcon} label={t('auto')} />
+                        <NavLink to="/transport?type=OTHER" icon={Car} label={t('car_taxis')} />
                         <NavLink to="/places" icon={MapPin} label={t('famous_places')} />
                         <NavLink to="/feedback" icon={MessageSquare} label={t('feedback')} />
 
@@ -100,7 +103,9 @@ const Navbar = () => {
             <div className={`md:hidden absolute top-full left-0 right-0 glass border-b border-white/20 shadow-xl transition-all duration-300 ease-in-out origin-top ${isOpen ? 'opacity-100 scale-y-100' : 'opacity-0 scale-y-0 h-0'}`}>
                 <div className="p-4 space-y-2">
                     <MobileNavLink to="/buses" icon={Bus} label={t('bus_timings')} />
-                    <MobileNavLink to="/transport" icon={Truck} label={t('transport_services')} />
+                    <MobileNavLink to="/transport?type=TEMPO" icon={Truck} label={t('tempo')} />
+                    <MobileNavLink to="/transport?type=AUTO" icon={AutoRickshawIcon} label={t('auto')} />
+                    <MobileNavLink to="/transport?type=OTHER" icon={Car} label={t('car_taxis')} />
                     <MobileNavLink to="/places" icon={MapPin} label={t('famous_places')} />
                     <MobileNavLink to="/feedback" icon={MessageSquare} label={t('feedback')} />
 
