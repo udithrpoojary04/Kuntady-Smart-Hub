@@ -1,0 +1,31 @@
+services:
+  - type: web
+    name: transport-backend
+    env: python
+    region: singapore
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn transport_project.wsgi:application"
+    rootDir: "backend"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.9.0
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: "false"
+      - key: ALLOWED_HOSTS
+        value: "*"
+
+  - type: static
+    name: transport-frontend
+    env: static
+    region: singapore
+    rootDir: "frontend"
+    buildCommand: "npm install && npm run build"
+    publishDir: "dist"
+    envVars:
+      - key: VITE_API_URL
+        fromService:
+          type: web
+          name: transport-backend
+          property: url

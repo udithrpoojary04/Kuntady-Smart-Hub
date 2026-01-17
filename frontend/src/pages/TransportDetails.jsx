@@ -72,7 +72,10 @@ const TransportDetails = () => {
                                                 </div>
                                                 <h3 className="text-lg font-bold">{service.provider_name}</h3>
                                             </div>
-                                            <span className="bg-gray-100 text-gray-600 px-2 py-1 rounded text-xs font-mono">{service.contact_number}</span>
+                                            <span className="bg-gray-100 text-gray-600 px-2 py-1 rounded text-xs font-mono">
+                                                <span className="font-semibold text-gray-500 mr-1">{t('mobile_no')}</span>
+                                                {service.contact_number}
+                                            </span>
                                         </div>
                                         <div className="mt-4 text-sm text-gray-600 space-y-2">
                                             <p className="flex items-center"><Navigation className="w-4 h-4 mr-2" /> Stand: {service.stand_location}</p>
