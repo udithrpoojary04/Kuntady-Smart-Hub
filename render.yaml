@@ -2,6 +2,7 @@ services:
   - type: web
     name: transport-backend
     env: python
+    plan: free
     buildCommand: "./build.sh"
     startCommand: "gunicorn transport_project.wsgi:application"
     rootDir: "backend"
