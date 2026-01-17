@@ -1,8 +1,6 @@
-services:
   - type: web
     name: transport-backend
     env: python
-    region: singapore
     buildCommand: "./build.sh"
     startCommand: "gunicorn transport_project.wsgi:application"
     rootDir: "backend"
