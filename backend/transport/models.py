@@ -8,8 +8,7 @@ class Bus(models.Model):
     bus_number = models.CharField(_('Bus Number'), max_length=20, default="")
     start_point = models.CharField(_('Start Point'), max_length=100)
     end_point = models.CharField(_('End Point'), max_length=100)
-    departure_time = models.TimeField(_('Departure Time'))
-    arrival_time = models.TimeField(_('Arrival Time'))
+    time = models.TimeField(_('Time'), default='00:00:00')
     via = models.TextField(_('Via (Stops)'), blank=True)
 
     def __str__(self):
@@ -36,7 +35,7 @@ class Place(models.Model):
     name = models.CharField(_('Name'), max_length=100)
     description = models.TextField(_('Description'))
     image = models.ImageField(_('Image'), upload_to='places/', blank=True, null=True)
-    location_url = models.URLField(_('Location Map URL'), blank=True)
+    location_url = models.URLField(_('Location Map URL'), max_length=500, blank=True)
 
     def __str__(self):
         return self.name

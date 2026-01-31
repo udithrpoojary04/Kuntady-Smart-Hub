@@ -29,8 +29,9 @@ const BusTimings = () => {
         (bus.bus_number && bus.bus_number.includes(searchTerm)) ||
         (bus.bus_name && bus.bus_name.toLowerCase().includes(searchTerm.toLowerCase())) ||
         bus.start_point.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        bus.start_point.toLowerCase().includes(searchTerm.toLowerCase()) ||
         bus.end_point.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    ).sort((a, b) => a.time.localeCompare(b.time));
 
     const formatTime = (timeString) => {
         if (!timeString) return '';
@@ -92,7 +93,7 @@ const BusTimings = () => {
                                 <div className="flex items-center text-gray-600">
                                     <Clock className="w-5 h-5 mr-3 text-primary" />
                                     <span className="font-medium bg-gray-50 px-2 py-0.5 rounded">
-                                        {formatTime(bus.departure_time)} - {formatTime(bus.arrival_time)}
+                                        {formatTime(bus.time)}
                                     </span>
                                 </div>
                                 {bus.via && (

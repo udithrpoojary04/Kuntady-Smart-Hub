@@ -1,6 +1,6 @@
 # Transportation Information Website
 
-A full-stack web application for city transport information (Buses, Autos, Tempos, Places) with multilingual support (English/Kannada).
+A full-stack web application for Smart Kuntady (Buses, Autos, Tempos, Places) with multilingual support (English/Kannada).
 
 ## Tech Stack
 -   **Backend**: Python, Django, Django REST Framework, PostgreSQL

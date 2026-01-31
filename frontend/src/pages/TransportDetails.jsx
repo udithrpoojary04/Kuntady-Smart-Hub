@@ -52,37 +52,54 @@ const TransportDetails = () => {
             <h1 className="text-3xl font-bold text-gray-900 mb-6">{getTitle()}</h1>
 
             {loading ? <p>Loading...</p> : (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-8">
                     {typesToShow.map(type => {
                         const typeServices = services.filter(s => s.service_type === type);
-                        // If filtering by specific type, show message if empty
+
                         if (typeServices.length === 0) {
                             return filterType ? <p key={type} className="text-gray-500">No services found for {getTitle()}.</p> : null;
                         }
 
                         return (
-                            <div key={type} className="space-y-4">
-                                {!filterType && <h2 className="text-2xl font-semibold text-gray-800 border-b pb-2">{type}</h2>}
-                                {typeServices.map(service => (
-                                    <div key={service.id} className="bg-white p-6 rounded-lg shadow-sm border hover:border-primary transition-colors">
-                                        <div className="flex justify-between items-start">
-                                            <div className="flex items-center space-x-3">
-                                                <div className="p-2 bg-gray-50 rounded-lg">
+                            <div key={type} className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                                {!filterType && (
+                                    <div className="bg-gray-50 px-6 py-4 border-b border-gray-100">
+                                        <h2 className="text-xl font-bold text-gray-800 flex items-center">
+                                            {getServiceIcon(type)}
+                                            <span className="ml-3">{type === 'OTHER' ? 'Taxi/Car' : type.charAt(0) + type.slice(1).toLowerCase()}</span>
+                                        </h2>
+                                    </div>
+                                )}
+                                <div className="divide-y divide-gray-100">
+                                    {typeServices.map(service => (
+                                        <div key={service.id} className="p-6 hover:bg-gray-50 transition-colors flex flex-col md:flex-row md:items-center justify-between gap-4">
+                                            <div className="flex items-start space-x-4">
+                                                <div className="p-3 bg-primary/10 rounded-xl hidden md:block">
                                                     {getServiceIcon(service.service_type)}
                                                 </div>
-                                                <h3 className="text-lg font-bold">{service.provider_name}</h3>
+                                                <div>
+                                                    <h3 className="text-lg font-bold text-gray-900">{service.provider_name}</h3>
+                                                    <div className="flex flex-wrap gap-x-4 gap-y-1 mt-1 text-sm text-gray-600">
+                                                        <span className="flex items-center">
+                                                            <Navigation className="w-4 h-4 mr-1 text-primary" />
+                                                            {service.stand_location}
+                                                        </span>
+                                                        <span className="flex items-center">
+                                                            <Map className="w-4 h-4 mr-1 text-primary" />
+                                                            {service.service_area}
+                                                        </span>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <span className="bg-gray-100 text-gray-600 px-2 py-1 rounded text-xs font-mono">
-                                                <span className="font-semibold text-gray-500 mr-1">{t('mobile_no')}</span>
-                                                {service.contact_number}
-                                            </span>
+                                            <div className="flex items-center">
+                                                <a href={`tel:${service.contact_number}`} className="flex items-center justify-center w-full md:w-auto px-4 py-2 bg-green-50 text-green-700 hover:bg-green-100 rounded-lg font-medium transition-colors">
+                                                    <Phone className="w-4 h-4 mr-2" />
+                                                    {service.contact_number}
+                                                </a>
+                                            </div>
                                         </div>
-                                        <div className="mt-4 text-sm text-gray-600 space-y-2">
-                                            <p className="flex items-center"><Navigation className="w-4 h-4 mr-2" /> Stand: {service.stand_location}</p>
-                                            <p className="flex items-center"><Map className="w-4 h-4 mr-2" /> Area: {service.service_area}</p>
-                                        </div>
-                                    </div>
-                                ))}
+                                    ))}
+                                </div>
                             </div>
                         );
                     })}

@@ -21,7 +21,7 @@ const AdminDashboard = () => {
     const tabs = [
         { id: 'buses', label: 'Buses', endpoint: '/buses/' },
         { id: 'transport', label: 'Transport Services', endpoint: '/transport-services/' },
-        { id: 'places', label: 'Famous Places', endpoint: '/famous-places/' },
+        { id: 'places', label: 'Famous Places', endpoint: '/places/' },
         { id: 'feedback', label: 'Feedback', endpoint: '/feedback/' },
     ];
 
@@ -35,7 +35,11 @@ const AdminDashboard = () => {
             const endpoint = tabs.find(t => t.id === activeTab)?.endpoint;
             if (endpoint) {
                 const response = await api.get(endpoint);
-                setItems(response.data);
+                let data = response.data;
+                if (activeTab === 'buses') {
+                    data.sort((a, b) => a.time.localeCompare(b.time));
+                }
+                setItems(data);
             }
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -104,15 +108,9 @@ const AdminDashboard = () => {
                         <input name="start_point" value={formData.start_point || ''} placeholder="Start Point" onChange={handleInputChange} className={inputClass} required />
                         <input name="end_point" value={formData.end_point || ''} placeholder="End Point" onChange={handleInputChange} className={inputClass} required />
                         <input name="via" value={formData.via || ''} placeholder="Via (Optional)" onChange={handleInputChange} className={inputClass} />
-                        <div className="flex space-x-3 mb-3">
-                            <div className="w-1/2">
-                                <label className="block text-xs font-medium text-gray-500 mb-1 ml-1">Departure</label>
-                                <input type="time" name="departure_time" value={formData.departure_time || ''} onChange={handleInputChange} className={inputClass} style={{ marginBottom: 0 }} required />
-                            </div>
-                            <div className="w-1/2">
-                                <label className="block text-xs font-medium text-gray-500 mb-1 ml-1">Arrival</label>
-                                <input type="time" name="arrival_time" value={formData.arrival_time || ''} onChange={handleInputChange} className={inputClass} style={{ marginBottom: 0 }} required />
-                            </div>
+                        <div className="w-full mb-3">
+                            <label className="block text-xs font-medium text-gray-500 mb-1 ml-1">Time</label>
+                            <input type="time" name="time" value={formData.time || ''} onChange={handleInputChange} className={inputClass} style={{ marginBottom: 0 }} required />
                         </div>
                     </>
                 );
@@ -208,6 +206,7 @@ const AdminDashboard = () => {
                                             <th className="p-4 font-semibold text-gray-600 first:rounded-tl-xl">ID</th>
                                             {activeTab === 'buses' && <th className="p-4 font-semibold text-gray-600">Bus</th>}
                                             {activeTab === 'buses' && <th className="p-4 font-semibold text-gray-600">Route</th>}
+                                            {activeTab === 'buses' && <th className="p-4 font-semibold text-gray-600">Time</th>}
                                             {activeTab === 'transport' && <th className="p-4 font-semibold text-gray-600">Provider</th>}
                                             {activeTab === 'transport' && <th className="p-4 font-semibold text-gray-600">Type</th>}
                                             {activeTab === 'places' && <th className="p-4 font-semibold text-gray-600">Name</th>}
@@ -230,6 +229,9 @@ const AdminDashboard = () => {
                                                             <span className="font-medium">{item.start_point}</span>
                                                             <span className="text-gray-400 mx-2">→</span>
                                                             <span className="font-medium">{item.end_point}</span>
+                                                        </td>
+                                                        <td className="p-4 text-gray-600 font-mono">
+                                                            {new Date(`1970-01-01T${item.time}`).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit', hour12: true })}
                                                         </td>
                                                     </>
                                                 )}

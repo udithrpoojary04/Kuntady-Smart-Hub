@@ -4,6 +4,8 @@ import { useTranslation } from 'react-i18next';
 import { Bus, MapPin, Truck, MessageSquare, ShieldCheck, Globe, Menu, X, Car } from 'lucide-react';
 import AutoRickshawIcon from './icons/AutoRickshawIcon';
 
+import logo from '../assets/logo.png';
+
 const Navbar = () => {
     const { t, i18n } = useTranslation();
 
@@ -46,9 +48,7 @@ const Navbar = () => {
                 <div className="flex justify-between h-20">
                     <div className="flex items-center">
                         <Link to="/" className="flex items-center space-x-3 group">
-                            <div className="bg-primary/10 p-2.5 rounded-xl group-hover:rotate-6 transition-transform duration-300">
-                                <Bus className="w-8 h-8 text-primary" />
-                            </div>
+                            <img src={logo} alt="Smart Kuntady Logo" className="w-12 h-12 object-contain group-hover:rotate-6 transition-transform duration-300" />
                             <span className="text-xl md:text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary truncate max-w-[200px] md:max-w-none">
                                 {t('app_title')}
                             </span>

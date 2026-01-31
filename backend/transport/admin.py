@@ -3,7 +3,7 @@ from .models import Bus, TransportService, Place, Feedback
 
 @admin.register(Bus)
 class BusAdmin(admin.ModelAdmin):
-    list_display = ('bus_number', 'bus_name', 'start_point', 'end_point', 'departure_time')
+    list_display = ('bus_number', 'bus_name', 'start_point', 'end_point', 'time')
     search_fields = ('bus_number', 'bus_name', 'start_point', 'end_point')
 
 @admin.register(TransportService)
