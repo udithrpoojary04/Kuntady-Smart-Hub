@@ -12,6 +12,7 @@ import Feedback from './pages/Feedback';
 import AdminLogin from './pages/AdminLogin';
 import AdminDashboard from './pages/AdminDashboard';
 
+import Chatbot from './components/Chatbot';
 import Footer from './components/Footer';
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
             <Route path="/addadmin04/dashboard" element={<AdminDashboard />} />
           </Routes>
         </main>
+        <Chatbot />
         <Footer />
       </div>
     </Router>
