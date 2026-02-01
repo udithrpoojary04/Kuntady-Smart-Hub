@@ -7,11 +7,18 @@ django.setup()
 from django.contrib.auth import get_user_model
 User = get_user_model()
 
-if not User.objects.filter(username='admin').exists():
-    User.objects.create_superuser('admin', 'admin@example.com', 'admin')
-    print("Superuser 'admin' created.")
+username = os.environ.get('DJANGO_SUPERUSER_USERNAME', 'admin')
+email = os.environ.get('DJANGO_SUPERUSER_EMAIL', 'admin@example.com')
+password = os.environ.get('DJANGO_SUPERUSER_PASSWORD', 'admin')
+
+if not User.objects.filter(username=username).exists():
+    print(f"Creating superuser '{username}'...")
+    User.objects.create_superuser(username, email, password)
+    print(f"Superuser '{username}' created.")
 else:
-    u = User.objects.get(username='admin')
-    u.set_password('admin')
+    print(f"Superuser '{username}' exists. Updating password...")
+    u = User.objects.get(username=username)
+    u.email = email
+    u.set_password(password)
     u.save()
-    print("Superuser 'admin' password reset to 'admin'.")
+    print(f"Superuser '{username}' password updated.")
