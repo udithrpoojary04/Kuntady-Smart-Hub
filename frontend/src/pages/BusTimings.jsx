@@ -19,7 +19,10 @@ const BusTimings = () => {
             setBuses(response.data);
         } catch (error) {
             console.error('Error fetching buses:', error);
-            // setBuses([]); // Ensure it's empty on error
+            if (error.code === 'ECONNABORTED' || error.response?.status === 504) {
+                // Could act on this state to show specific "Waking up server..." message
+                console.log("Server waking up...");
+            }
         } finally {
             setLoading(false);
         }

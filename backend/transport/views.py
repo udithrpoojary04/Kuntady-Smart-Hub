@@ -13,8 +13,7 @@ class BusViewSet(viewsets.ModelViewSet):
     def get_permissions(self):
         if self.request.method in permissions.SAFE_METHODS:
             return [permissions.AllowAny()]
-        return [permissions.IsAuthenticatedOrReadOnly()]
-    # permissions_classes=[AllowAny]
+        return [permissions.IsAdminUser()]
 
 
 class TransportServiceViewSet(viewsets.ModelViewSet):
@@ -24,8 +23,7 @@ class TransportServiceViewSet(viewsets.ModelViewSet):
     def get_permissions(self):
         if self.request.method in permissions.SAFE_METHODS:
             return [permissions.AllowAny()]
-        return [permissions.IsAuthenticatedOrReadOnly()]
-    # permissions_classes=[AllowAny]
+        return [permissions.IsAdminUser()]
 
 
 class PlaceViewSet(viewsets.ModelViewSet):
@@ -35,16 +33,15 @@ class PlaceViewSet(viewsets.ModelViewSet):
     def get_permissions(self):
         if self.request.method in permissions.SAFE_METHODS:
             return [permissions.AllowAny()]
-        return [permissions.IsAuthenticatedOrReadOnly()]
+        return [permissions.IsAdminUser()]
 
-    # permissions_classes=[AllowAny]
 
 class FeedbackViewSet(viewsets.ModelViewSet):
     queryset = Feedback.objects.all()
     serializer_class = FeedbackSerializer
-    # Allow anyone to post, only admin to list/retrieve
+    
     def get_permissions(self):
-        if self.action in ['create']:
+        if self.action == 'create':
             return [permissions.AllowAny()]
         return [permissions.IsAdminUser()]
 
