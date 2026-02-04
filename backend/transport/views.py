@@ -41,7 +41,7 @@ class FeedbackViewSet(viewsets.ModelViewSet):
     serializer_class = FeedbackSerializer
     
     def get_permissions(self):
-        if self.action == 'create':
+        if self.request.method == 'POST': # Allow anyone to POST feedback
             return [permissions.AllowAny()]
         return [permissions.IsAdminUser()]
 
